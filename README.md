@@ -58,7 +58,7 @@ bookId,ISBN,author,title,genre
 4,978-0553380163,J. K. Rowling,Harry Potter and the Philosopher's Stone,FICTION
 ```
 
-Notes:
+**Notes**:
 - ISBN format is not validated; any string is accepted.
 - All fields are required.
 
@@ -74,7 +74,7 @@ loanId,bookId,borrowDate,returnDate,rating
 1008,4,2025-11-20T10:10:00,,
 ```
 
-Notes:
+**Notes**:
 - Date format: ISO 8601 (`YYYY-MM-DDThh:mm:ss`)
 - The `returnDate` and `rating` fields can be empty if the book has not been returned yet.
 - `bookId` references a book from the books CSV file.
@@ -102,7 +102,8 @@ Select a menu option:
 
 When the user selects option 1, the application displays the top 3 books with the highest average rating.
 
-Example output:
+**Example output**:
+
 ```
 Book: Pride and Prejudice, Avg Rating: 4.00
 Book: The Lord of the Rings, Avg Rating: 4.50
@@ -115,7 +116,8 @@ Details of the calculation are covered in the service layer section.
 
 When the user selects option 2, the application displays the top 3 most borrowed books.
 
-Example output:
+**Example output**:
+
 ```
 Book: The Little Prince, Borrowed: 3 times
 Book: Harry Potter and the Philosopher's Stone, Borrowed: 2 times
@@ -128,14 +130,14 @@ Details of the calculation are covered in the service layer section.
 
 When the user selects option 3, the application prompts for a book ID and creates a new loan.
 
-Example interaction:
+**Example interaction**:
 ```
 Enter book ID: 1
 Loan created successfully.
 Loan ID: 1010, Book author: Jane Austen, Book title: Pride and Prejudice, Borrow Date: 2026-03-08T14:30:00
 ```
 
-Error handling:
+**Error handling**:
 - If the user enters a book ID that is not a valid number, display the error message: `Invalid number.`,
   and prompt the user to retry.
 - If an error occurs during loan creation (see details later), display:
@@ -145,19 +147,20 @@ Error handling:
 
 When the user selects option 4, the application prompts for a loan ID and rating, then marks the book as returned.
 
-Example interaction:
+**Example interaction**:
 ```
 Enter loan ID to return: 1008
 Enter rating (1-5): 5
 Book returned successfully.
 ```
 
-Error handling:
+**Error handling**:
 - If the user enters a loan ID or rating that is not a valid number, display the error message: `Invalid number.`,
   and prompt the user to retry.
 - If an error occurs during the book return (see details later), display:
   `Failed to return book: ` + error message, and return to the main menu.
 
+**Final message**:
 
 ```
 Exiting application. Goodbye!
@@ -172,10 +175,10 @@ Instructions for implementing the application:
 Base package: `com.epam.assessment.library`
 
 The application classes should be organized into the following sub-packages according to their responsibilities:
-- `domain` - Domain model classes
-- `persistence` - Persistence (or Data Access) layer
-- `service` - Service layer
-- `presentation` - Presentation layer
+- `domain` - **Domain Model** classes
+- `persistence` - **Persistence** (or Data Access) **Layer**
+- `service` - **Service Layer**
+- `presentation` - **Presentation Layer**
 
 ## Application Class
 
@@ -277,7 +280,7 @@ The return type `BookUsage` is a record that contains the `Book` and the count o
     - `rating`: null
 - Adds the created loan object to the repository and returns the created loan.
 
-Error cases:
+**Error cases**:
 - If the book does not exist, throws an `IllegalArgumentException` with the message: `"Book not found with ID: " + bookId`
 
 `void returnBook(long loanId, int rating)` method:
@@ -286,7 +289,7 @@ Error cases:
   - Sets the `returnDate` to the current system date/time.
   - Sets the `rating` to the provided value.
 
-Error cases:
+**Error cases**:
 - If the rating argument is out of range (must be between 1 and 5 inclusive), throws an `IllegalArgumentException`.
 - If the loan does not exist, throws an `IllegalArgumentException` with the message: `"Loan not found with ID: " + loanId`.
 - If the loan already has a return date (i.e., the book is already returned),
@@ -328,7 +331,7 @@ Make sure all tests pass before submitting your implementation.
 The Autocode platform will perform automated testing using the same test classes,
 so it's crucial that your implementation is correct and all tests pass.
 
-Note:
+**Notes**:
 - The tests cover only a few cases. Passing all tests does not guarantee that your implementation is fully correct.
 - Make sure to follow the specifications carefully and handle all edge cases as described.
 - Run your implementation and test it manually to ensure that the user interface works as expected
