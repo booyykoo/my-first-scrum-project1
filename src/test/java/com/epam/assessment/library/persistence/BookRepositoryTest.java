@@ -11,7 +11,7 @@ class BookRepositoryTest {
     @Test
     public void loadBooks_validFile_booksLoadedAndFindByIdReturnsCorrectBooks() {
         // Given
-        String booksFilePath = Paths.get("data", "books.csv").toString();
+        String booksFilePath = Paths.get("test_data", "books.csv").toString();
         BookRepository bookRepository = new BookRepository(booksFilePath);
 
         // When

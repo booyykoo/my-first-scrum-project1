@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class LoanRepositoryTest {
-    public static final String LOANS_FILE_PATH = "data/loans.csv";
+    public static final String LOANS_FILE_PATH = "test_data/loans.csv";
 
     private LoanRepository loanRepository;
     private BookRepository bookRepositoryMock;
@@ -36,9 +36,6 @@ class LoanRepositoryTest {
 
         Book book4 = new Book(4, "978-0553380163", "J. K. Rowling", "Harry Potter and the Philosopher's Stone", Genre.FICTION);
         when(bookRepositoryMock.findById(4L)).thenReturn(Optional.of(book4));
-
-        Book book5 = new Book(5, "978-0061120084", "Stephen Hawking", "A Brief History of Time — by", Genre.SCIENCE);
-        when(bookRepositoryMock.findById(5L)).thenReturn(Optional.of(book5));
     }
 
     @Test
@@ -67,7 +64,7 @@ class LoanRepositoryTest {
         List<Loan> loans = loanRepository.getLoans();
 
         // Then
-        assertEquals(15, loans.size(), "There should be 15 loans loaded");
+        assertEquals(9, loans.size(), "number of loans loaded");
     }
 
     @Test
@@ -79,6 +76,6 @@ class LoanRepositoryTest {
         long nextLoanId = loanRepository.getNextLoanId();
 
         // Then
-        assertEquals(1016, nextLoanId, "Next loan ID should be 1016");
+        assertEquals(1010, nextLoanId, "generated loanId");
     }
 }
