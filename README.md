@@ -3,7 +3,7 @@
 The **"Book Loan"** application helps library staff manage book loans and analyze book popularity.
 
 The application tracks books and loans in a simple data model:
-- **Books** contain information like ISBN, author, title, and genre.
+- **Books** contain information such as ISBN, author, title, and genre.
 - **Loans** record when a book is borrowed, when it's returned, and the rating given by the reader.
 
 Example of a book:
@@ -22,7 +22,7 @@ Example of a loan:
 
 The application allows library staff to:
 - Query the top-rated books based on reader ratings.
-- Identify the most wanted books based on how often they were borrowed.
+- Identify the most wanted books based on borrowing frequency.
 - Enter a new loan when a reader borrows a book.
 - Process book returns and record ratings.
 
@@ -34,9 +34,9 @@ Your task is to implement this application according to the specifications below
 Here are the main steps from application start to stop:
 
 1. When the application starts, it loads **Books** and **Loans** from CSV files.
-2. The application displays a menu of functions that the user can do in the application.
-   The user can repeatedly select some function that the application processes until they choose to exit.
-5. When the user exits, the application saves any new or updated data back to the CSV files.
+2. The application displays a menu of available functions.
+   The user can repeatedly select a function for the application to process until they choose to exit.
+3. When the user exits, the application saves any new or updated data back to the CSV files.
 
 
 ## Data Representation - CSV
@@ -45,7 +45,7 @@ The application stores data in two CSV files: one for books and one for loans.
 
 ### Books CSV
 
-The books CSV file has the following format (first row is the header):
+The books CSV file has the following format (the first row is the header):
 
 ```
 bookId,ISBN,author,title,genre
@@ -61,7 +61,7 @@ Notes:
 
 ### Loans CSV
 
-The loans CSV file has the following format (first row is the header):
+The loans CSV file has the following format (the first row is the header):
 
 ```
 loanId,bookId,borrowDate,returnDate,rating
@@ -106,7 +106,7 @@ Book: The Lord of the Rings, Avg Rating: 4.50
 Book: The Little Prince, Avg Rating: 4.33
 ```
 
-Details of the calculation will be covered in the service layer chapter.
+Details of the calculation are covered in the service layer section.
 
 ## Query Most Wanted Books
 
@@ -119,7 +119,7 @@ Book: Harry Potter and the Philosopher's Stone, Borrowed: 2 times
 Book: Pride and Prejudice, Borrowed: 2 times
 ```
 
-Details of the calculation will be covered in the service layer chapter.
+Details of the calculation are covered in the service layer section.
 
 ## Enter Loan
 
@@ -132,11 +132,11 @@ Loan created successfully.
 Loan ID: 1010, Book author: Jane Austen, Book title: Pride and Prejudice, Borrow Date: 2026-03-08T14:30:00
 ```
 
-Error handling
-- If the user enters a book ID that is not a valid number, display an error message: `Invalid number.`,
-  and asks the user to repeat.
-- If some error happens during loan creation (see details later), display:
-  `Failed to enter loan: ` + error message. And returns to the main menu.
+Error handling:
+- If the user enters a book ID that is not a valid number, display the error message: `Invalid number.`,
+  and prompt the user to retry.
+- If an error occurs during loan creation (see details later), display:
+  `Failed to enter loan: ` + error message, and return to the main menu.
 
 ## Return Book
 
@@ -149,11 +149,11 @@ Enter rating (1-5): 5
 Book returned successfully.
 ```
 
-Error handling
-- If the user enters a loan ID or rating that is not a valid number, display an error message: `Invalid number.`,
-  and asks the user to repeat.
-- If some error happens during loan return (see details later), display:
-  `Failed to return book: ` + error message. And returns to the main menu.
+Error handling:
+- If the user enters a loan ID or rating that is not a valid number, display the error message: `Invalid number.`,
+  and prompt the user to retry.
+- If an error occurs during the book return (see details later), display:
+  `Failed to return book: ` + error message, and return to the main menu.
 
 ## Exit
 
@@ -180,23 +180,23 @@ The application classes should be organized into the following sub-packages acco
 ## Application Class
 
 The `Application` class is the entry point and orchestrates the application components.
-The class exists, and you do not have to modify it.
+This class exists, and you do not have to modify it.
 
 
 ## Domain Model Classes
 
-The classes are located in `com.epam.assessment.library.domain` package.
-The classes (`Book` and `Loan` and `Genre` enum) are partially implemented. You can add and modify them as needed.
+These classes are located in the `com.epam.assessment.library.domain` package.
+The classes (`Book`, `Loan`, and `Genre` enum) are partially implemented. You can add and modify them as needed.
 
 
 ## Persistence Layer
 
-Classes of the persistence layer are responsible for loading and saving data from/to CSV files.
+Classes in the persistence layer are responsible for loading and saving data from/to CSV files.
 
 ### BookRepository Class
 
 **Constructor:**
-- `filePath` argument - path to the books CSV file
+- `filePath` parameter - path to the books CSV file
 
 **Methods:**
 
@@ -204,8 +204,8 @@ Classes of the persistence layer are responsible for loading and saving data fro
 - Opens the file at `filePath`.
 - Reads each line (skipping the header).
 - Stores the books in a collection.
-- If some `IOException` happens while it processing the file, wraps into `RuntimeException` with a meaningful message.
-- If the format of a CSV row is invalid, throws `IllegalArgumentException` with a meaningful message.
+- If an `IOException` occurs while processing the file, wraps it in a `RuntimeException` with a meaningful message.
+- If the format of a CSV row is invalid, throws an `IllegalArgumentException` with a meaningful message.
 
 `Optional<Book> findById(long bookId)` method:
 - Searches the internal book collection for a book with the given ID.
@@ -214,17 +214,17 @@ Classes of the persistence layer are responsible for loading and saving data fro
 ### LoanRepository Class
 
 **Constructor:**
-- `filePath` argument - path to the loans CSV file
-- bookRepository argument - used for resolving book references by book id
+- `filePath` parameter - path to the loans CSV file
+- `bookRepository` parameter - used for resolving book references by book ID
 
 **Methods:**
 
 `void loadLoans()` method:
 - Implementation and requirements are similar to `BookRepository.loadBooks()`,
   but with additional logic for parsing loans and resolving book references.
-  If a loan references a book ID (e.g. 1), it must call `bookRepository.findById()` method to get the Book object,
+  If a loan references a book ID (e.g., 1), it must call the `bookRepository.findById()` method to get the Book object,
   which is **Pride and Prejudice** in this case.
-- If the book does not exist, it should throw `IllegalArgumentException` with a meaningful message.
+- If the book does not exist, it should throw an `IllegalArgumentException` with a meaningful message.
 
 `List<Loan> getLoans()` method:
 - Returns the list of all loans.
@@ -233,28 +233,28 @@ Classes of the persistence layer are responsible for loading and saving data fro
 - Similar to `BookRepository.findById()`, but for loans.
 
 `long getNextLoanId()` method:
-- Finds the maximum loan ID in the current loan list. Returns `maxId + 1`.
-- If the list is empty, returns 1001 (initial loan ID).
+- Finds the maximum loan ID in the current loan list and returns `maxId + 1`.
+- If the list is empty, returns 1001 (the initial loan ID).
 
 
 ## Service Layer
 
-The single class of the service layer contains all the business logic of the application.
+The single class in the service layer contains all the business logic of the application.
 
 ### BookLoanService Class
 
 **Constructor:**
-- `BookLoanService(BookRepository , LoanRepository loanRepository)`
+- `BookLoanService(BookRepository bookRepository, LoanRepository loanRepository)`
 - `bookRepository` - used to perform book data access operations
 - `loanRepository` - used to perform loan data access operations
 
 **Methods:**
 
 `List<RatedBook> queryTopRatedBooks(int topN)` method:
-- For each book it calculates the average rating based on the loans that have a rating for that book.
-- Return the top N books with the highest average rating.
+- For each book, calculates the average rating based on the loans that have a rating for that book.
+- Returns the top N books with the highest average rating.
 
-The example csv file contains to entries for book id=1, ratings are 5 and 3,
+The example CSV file contains two entries for book id=1, with ratings of 5 and 3,
 so the average rating is `(5 + 3) / 2 = 4`.
 
 If a book has no ratings, it should not be included in the result.
@@ -262,7 +262,7 @@ If a book has no ratings, it should not be included in the result.
 The return type `RatedBook` is a record that contains the `Book` and its average rating.
 
 `List<BookUsage> queryMostWantedBooks(int topN)` method:
-- Counts the number of loans for each book. Sorts books by loan count in descending order,
+- Counts the number of loans for each book, sorts books by loan count in descending order,
   and returns the top N books with the highest loan count.
 
 The return type `BookUsage` is a record that contains the `Book` and the count of how many times it was borrowed.
@@ -270,15 +270,15 @@ The return type `BookUsage` is a record that contains the `Book` and the count o
 `Loan createLoan(long bookId)` method:
 - Creates a new loan for the book with the given ID.
 - The `Loan` object must be initialized with:
-    - `loanId`: generated ID, use `loanRepository.getNextLoanId()`
-    - `book`: looked-up book, use `bookRepository.findById(bookId)` to resolve
+    - `loanId`: generated ID; use `loanRepository.getNextLoanId()`
+    - `book`: looked-up book; use `bookRepository.findById(bookId)` to resolve
     - `borrowDate`: current system date/time
     - `returnDate`: null
     - `rating`: null
-- Adds the created loan object to the repository using, and returns the created loan.
+- Adds the created loan object to the repository and returns the created loan.
 
-Error cases
-- If the book does not exist, throws `IllegalArgumentException` with message: `"Book not found with ID: " + bookId`
+Error cases:
+- If the book does not exist, throws an `IllegalArgumentException` with the message: `"Book not found with ID: " + bookId`
 
 `void returnBook(long loanId, int rating)` method:
 - Returns a book for the loan with the given ID and sets the rating.
@@ -287,14 +287,14 @@ Error cases
   - Sets the `rating` to the provided value.
 
 Error cases:
-- If the rate argument is out of range (between 1 and 5 inclusive), throw `IllegalArgumentException`.
-- If the loan does not exist, throws `IllegalArgumentException` with message: `"Loan not found with ID: " + loanId`.
-- If the loan already has a return date (i.e. the book is already returned),
-  throws `IllegalStateException` with message: `"Loan with ID: " + loanId + " is already returned"`.
+- If the rating argument is out of range (must be between 1 and 5 inclusive), throws an `IllegalArgumentException`.
+- If the loan does not exist, throws an `IllegalArgumentException` with the message: `"Loan not found with ID: " + loanId`.
+- If the loan already has a return date (i.e., the book is already returned),
+  throws an `IllegalStateException` with the message: `"Loan with ID: " + loanId + " is already returned"`.
 
 ## Presentation Layer
 
-The single class of the presentation layer is responsible for user interactions.
+The single class in the presentation layer is responsible for user interactions.
 
 
 ### UserInterface Class
@@ -305,10 +305,10 @@ The single class of the presentation layer is responsible for user interactions.
 **Methods:**
 
 `void interact()` method:
-- This is the main loop of all user interactions.
+- This is the main loop for all user interactions.
 
-Configurations
-- When you call `queryTopRatedBooks()` and `queryMostWantedBooks()` service methods,
+Configuration:
+- When calling the `queryTopRatedBooks()` and `queryMostWantedBooks()` service methods,
   pass `3` as the `topN` argument to get the top 3 books.
 
 
@@ -322,16 +322,16 @@ The template project includes some JUnit test classes for testing the applicatio
 
 ## Running Tests Locally
 
-You can run tests locally using your IDE or using Maven from the command line.
+You can run tests locally using your IDE or Maven from the command line.
 
 Make sure all tests pass before submitting your implementation.
-Autocode platform will perform automated testing using the same test classes,
+The Autocode platform will perform automated testing using the same test classes,
 so it's crucial that your implementation is correct and all tests pass.
 
 Note:
-- The tests cover only a few cases. Passing all tests does not guarantee that your implementation is fully correct,
-- Make sure to follow the specifications carefully, and handle all edge cases as described.
-- Run your implementation and test it manually to ensure that the user interface works as expected,
+- The tests cover only a few cases. Passing all tests does not guarantee that your implementation is fully correct.
+- Make sure to follow the specifications carefully and handle all edge cases as described.
+- Run your implementation and test it manually to ensure that the user interface works as expected
   and that all functionalities are correctly implemented.
 
 # Restrictions
@@ -343,3 +343,5 @@ Note:
 # Summary
 
 Good luck, and enjoy implementing the "Book Loan" application!
+
+
