@@ -36,7 +36,10 @@ Here are the main steps from application start to stop:
 1. When the application starts, it loads **Books** and **Loans** from CSV files.
 2. The application displays a menu of available functions.
    The user can repeatedly select a function for the application to process until they choose to exit.
-3. When the user exits, the application saves any new or updated data back to the CSV files.
+3. When the completes a function, it returns to the main menu.
+4. When the user selects the exit option:<br>
+  The application optionally saves any new or updated data back to the CSV files.<br>
+  Exits the application.
 
 
 ## Data Representation - CSV
@@ -155,9 +158,6 @@ Error handling:
 - If an error occurs during the book return (see details later), display:
   `Failed to return book: ` + error message, and return to the main menu.
 
-## Exit
-
-When the user selects option 0, the application saves the updated loans to the CSV file and exits.
 
 ```
 Exiting application. Goodbye!
@@ -340,8 +340,11 @@ Note:
 - Do not change the content of the CSV files in the `test_data` directory, as they are used in the tests.
   You are free to change the content of the CSV files in the `data` directory.
 
+# Extra Feature
+
+Save as an optional feature. You may implement it, but not required for the main functionality of the application.
+
+
 # Summary
 
 Good luck, and enjoy implementing the "Book Loan" application!
-
-
