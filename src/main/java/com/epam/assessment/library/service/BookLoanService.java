@@ -21,7 +21,7 @@ public class BookLoanService {
         return null;
     }
 
-    public Loan enterLoan(long bookId) {
+    public Loan createLoan(long bookId) {
         return null;
     }
 
