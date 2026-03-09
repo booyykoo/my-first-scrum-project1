@@ -92,7 +92,7 @@ When the application runs, it displays a menu:
 Library Manager Menu:
 1. Query top rated books
 2. Query most wanted books
-3. Enter loan
+3. Create loan
 4. Return book
 0. Exit
 Select a menu option: 
