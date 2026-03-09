@@ -105,12 +105,15 @@ When the user selects option 1, the application displays the top 3 books with th
 **Example output**:
 
 ```
-Book: Pride and Prejudice, Avg Rating: 4.00
-Book: The Lord of the Rings, Avg Rating: 4.50
-Book: The Little Prince, Avg Rating: 4.33
+Top 3 rated books:
+The Lord of the Rings (J. R. R. Tolkien), Avg Rating: 4.50
+The Little Prince (Antoine de Saint-Exupéry), Avg Rating: 4.33
+Pride and Prejudice (Jane Austen), Avg Rating: 4.00
 ```
 
-Details of the calculation are covered in the service layer section.
+Details of the calculation are covered in the service layer section. 
+
+The rating value must be rounded to two decimal places using standard round-half-up rounding.
 
 ## Query Most Wanted Books
 
@@ -119,9 +122,10 @@ When the user selects option 2, the application displays the top 3 most borrowed
 **Example output**:
 
 ```
-Book: The Little Prince, Borrowed: 3 times
-Book: Harry Potter and the Philosopher's Stone, Borrowed: 2 times
-Book: Pride and Prejudice, Borrowed: 2 times
+Top 3 most wanted books:
+The Little Prince (Antoine de Saint-Exupéry), Borrowed: 3 times
+Harry Potter and the Philosopher's Stone (J. K. Rowling), Borrowed: 2 times
+Pride and Prejudice (Jane Austen), Borrowed: 2 times
 ```
 
 Details of the calculation are covered in the service layer section.
@@ -134,11 +138,11 @@ When the user selects option 3, the application prompts for a book ID and create
 ```
 Enter book ID: 1
 Loan created successfully.
-Loan ID: 1010, Book author: Jane Austen, Book title: Pride and Prejudice, Borrow Date: 2026-03-08T14:30:00
+Loan ID: 1010, Book: Pride and Prejudice (Jane Austen), Borrow Date: 2026-03-08 14:30:00
 ```
 
 **Error handling**:
-- If the user enters a book ID that is not a valid number, display the error message: `Invalid number.`,
+- If the user enters a book ID that is not a valid number, display the error message: `Invalid number`,
   and prompt the user to retry.
 - If an error occurs during loan creation (see details later), display:
   `Failed to enter loan: ` + error message, and return to the main menu.
@@ -155,7 +159,7 @@ Book returned successfully.
 ```
 
 **Error handling**:
-- If the user enters a loan ID or rating that is not a valid number, display the error message: `Invalid number.`,
+- If the user enters a loan ID or rating that is not a valid number, display the error message: `Invalid number`,
   and prompt the user to retry.
 - If an error occurs during the book return (see details later), display:
   `Failed to return book: ` + error message, and return to the main menu.
