@@ -37,4 +37,12 @@ public class Loan {
         return rating;
     }
 
+    public void setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
 }
