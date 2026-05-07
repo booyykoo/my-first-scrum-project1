@@ -21,6 +21,7 @@ public class LoanRepository {
         this.filePath = filePath;
         this.bookRepository = bookRepository;
         this.loans = new ArrayList<>();
+        System.out.println("test2");
     }
 
     public void loadLoans() {
@@ -72,6 +73,7 @@ public class LoanRepository {
                 throw e;
             }
             throw new IllegalArgumentException("Invalid data in file: " + filePath, e);
+
         }
     }
 
