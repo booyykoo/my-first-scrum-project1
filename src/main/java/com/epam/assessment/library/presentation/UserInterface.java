@@ -53,6 +53,7 @@ public class UserInterface {
                     break;
                 default:
                     System.out.println("Invalid option");
+                    System.out.println("test");
             }
         }
     }
